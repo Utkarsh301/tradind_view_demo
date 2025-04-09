@@ -32,7 +32,8 @@ function App() {
     else if (error) return <p>Error loading chart: {error}</p>;
     return (
         <>
-            <div style={{padding: 20, width: '700px', height: '700px'}}>
+            <p className={"text-gray-900 text-2xl font-semibold mb-2"}>BTCUSDT</p>
+            <div className="p-5 w-[800px] h-[600px] bg-indigo-500 rounded-2xl shadow-lg border border-gray-800">
                 <Chart>
                     {candlestickData.length > 1 && <Series
                         type={"Candlestick"}

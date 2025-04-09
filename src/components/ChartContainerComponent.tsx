@@ -25,7 +25,7 @@ export const ChartContainer = forwardRef<IChartApi, ChartContainerProps>(
                         ...rest,
                         layout,
                         width: container.clientWidth,
-                        height: 400,
+                        height: container.clientHeight,
                     });
                     this._api.timeScale().fitContent();
                 }

@@ -17,7 +17,7 @@ export function Chart(props: ChartProps) {
     }, []);
 
     return (
-        <div ref={refCallback} className="w-full h-[400px]">
+        <div ref={refCallback} className="w-full h-full">
             {container && <ChartContainer {...props} container={container} />}
         </div>
     );
