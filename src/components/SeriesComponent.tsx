@@ -18,8 +18,7 @@ interface SeriesProps {
     data: any[];
     type: SeriesType;
     options: SeriesPartialOptions<SeriesProps>[SeriesType] & SeriesOptionsCommon;
-
-    [key: string]: any;
+    refresh? : boolean;
 }
 
 export const Series = forwardRef<ISeriesApi<SeriesType>, SeriesProps>(
@@ -32,8 +31,11 @@ export const Series = forwardRef<ISeriesApi<SeriesType>, SeriesProps>(
 
         const context = useRef<SeriesContextRef>({
             api() {
-                if (!this._api) {
-                    const {data, type, options} = props;
+                const {data, type, options, refresh} = props;
+                // if (refresh && this._api) {
+                //     parent.free()
+                // }
+                // if (!this._api) {
 
                     switch (type) {
                         case "Line":
@@ -56,7 +58,7 @@ export const Series = forwardRef<ISeriesApi<SeriesType>, SeriesProps>(
                         this._api.setData(data);
                         console.log('Setting data for series:', this._api);
                     }
-                }
+                // }
                 return this._api as ISeriesApi<SeriesType>;
             },
             free() {

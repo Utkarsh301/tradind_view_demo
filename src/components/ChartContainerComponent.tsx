@@ -26,6 +26,10 @@ export const ChartContainer = forwardRef<IChartApi, ChartContainerProps>(
                         layout,
                         width: container.clientWidth,
                         height: container.clientHeight,
+                        timeScale: {
+                            timeVisible: true,
+                            secondsVisible: false,
+                        }
                     });
                     this._api.timeScale().fitContent();
                 }

@@ -7,11 +7,31 @@ import {Chart} from "./components/ChartComponent.tsx";
 import {Series} from "./components/SeriesComponent.tsx";
 import {useBinanceKlines} from "./hooks/useBinanceKlines.tsx";
 import {CandlestickSeries, UTCTimestamp} from "lightweight-charts";
+import {Autocomplete, AutocompleteItem} from "@heroui/react";
+
+export const binanceSymbols = [
+    {id: 'BTCUSDT', name: 'Bitcoin / Tether'},
+    {id: 'ETHUSDT', name: 'Ethereum / Tether'},
+    {id: 'BNBUSDT', name: 'BNB / Tether'},
+    {id: 'SOLUSDT', name: 'Solana / Tether'},
+    {id: 'XRPUSDT', name: 'XRP / Tether'},
+    {id: 'DOGEUSDT', name: 'Dogecoin / Tether'},
+    {id: 'ADAUSDT', name: 'Cardano / Tether'},
+    {id: 'AVAXUSDT', name: 'Avalanche / Tether'},
+    {id: 'MATICUSDT', name: 'Polygon / Tether'},
+    {id: 'LTCUSDT', name: 'Litecoin / Tether'},
+    {id: 'DOTUSDT', name: 'Polkadot / Tether'},
+    {id: 'SHIBUSDT', name: 'Shiba Inu / Tether'},
+    {id: 'LINKUSDT', name: 'Chainlink / Tether'},
+    {id: 'OPUSDT', name: 'Optimism / Tether'},
+    {id: 'ARBUSDT', name: 'Arbitrum / Tether'},
+];
+
 
 function App() {
-    const [count, setCount] = useState(0);
+    const [selectedSymbol, setSelectedSymbol] = useState("BTCUSDT");
     const {data, loading, error} = useBinanceKlines({
-        symbol: 'BTCUSDT',
+        symbol: selectedSymbol,
         interval: '1h'
     });
 
@@ -32,7 +52,19 @@ function App() {
     else if (error) return <p>Error loading chart: {error}</p>;
     return (
         <>
-            <p className={"text-gray-900 text-2xl font-semibold mb-2"}>BTCUSDT</p>
+            <Autocomplete
+                className={"max-w-xs mb-3"}
+                defaultItems={binanceSymbols}
+                selectedKey={selectedSymbol}
+                onSelectionChange={(key) => {
+                    const selectedSymbol = binanceSymbols.find((symbol) => symbol.id === key);
+                    if (selectedSymbol) {
+                        setSelectedSymbol(selectedSymbol.id);
+                    }
+                }}
+            >
+                {(item) => <AutocompleteItem key={item.id}>{item.name}</AutocompleteItem>}
+            </Autocomplete>
             <div className="p-5 w-[800px] h-[600px] bg-indigo-500 rounded-2xl shadow-lg border border-gray-800">
                 <Chart>
                     {candlestickData.length > 1 && <Series
